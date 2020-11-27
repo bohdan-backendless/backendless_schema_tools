@@ -1,8 +1,7 @@
 const _ = require('lodash');
 const Table = require('cli-table');
-const chalk = require('chalk');
 
-const SYSTEM_COLUMNS = ['created', 'updated', 'ownerId', 'objectId']
+const SYSTEM_COLUMNS = ['created', 'updated', 'ownerId', 'objectId', 'blUserLocale']
 
 const buildColumnsMap = table => {
     const result = {}
@@ -28,7 +27,7 @@ const buildColumnsMap = table => {
         if (relations) {
             relations.forEach(relation => {
                 const column = {
-                    columnName: relation.columnName,
+                    columnName: relation.name,
                     toTableName: relation.toTableName,
                     required: relation.required,
                     unique: relation.unique,
@@ -43,7 +42,7 @@ const buildColumnsMap = table => {
                 column.options = options
                 column.optionsString = options.join(', ')
 
-                result[relation.columnName] = column
+                result[relation.name] = column
             })
         }
     }
