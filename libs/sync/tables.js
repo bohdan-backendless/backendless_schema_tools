@@ -59,9 +59,13 @@ const syncTables = (api, apps, opts) => {
         const forAdd = sourceNames.filter(name => !targetNames.includes(name))
         const forRemove = targetNames.filter(name => !sourceNames.includes(name))
 
+        p = p.then(() => forRemove.length && removeTables(app, forRemove))
+
+        forAdd.forEach(tableName => {
+            p = p.then(() => addTable(app.id, tableName))
+        })
+
         return p
-            .then(() => forRemove.length && removeTables(app, forRemove))
-            .then(() => Promise.all(forAdd.map(tableName => addTable(app.id, tableName))))
     }, Promise.resolve())
 }
 
