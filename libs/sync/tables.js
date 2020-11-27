@@ -70,6 +70,8 @@ const syncTables = (api, apps, opts) => {
 }
 
 const syncColumn = async (api, app, tableName, columnName, sourceColumn, targetColumn, opts) => {
+    sourceColumn = sourceColumn && { name: sourceColumn.name || sourceColumn.columnName, ...sourceColumn }
+    targetColumn = targetColumn && { name: targetColumn.name || targetColumn.columnName, ...targetColumn }
 
     const addColumn = () => api.addColumn(app.id, tableName, sourceColumn)
 

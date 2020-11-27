@@ -27,7 +27,7 @@ const buildColumnsMap = table => {
         if (relations) {
             relations.forEach(relation => {
                 const column = {
-                    name: relation.name,
+                    columnName: relation.name,
                     toTableName: relation.toTableName,
                     required: relation.required,
                     unique: relation.unique,
