@@ -154,9 +154,15 @@ class Backendless {
     getAppSecrets() {
         return Promise.all(
             filterLive(this.appList).map(app => {
+                app.id = app.id || app.appId
+
                 if (app.id) {
                     return this.instance.get(`/${app.id}/console/appsettings`)
-                        .then(({data}) => app.secretKey = data.devices.REST)
+                        .then(({data}) => {
+                            const REST_KEY = data.apiKeys.find(({ name }) => name === 'REST').apiKey
+
+                            return app.secretKey = REST_KEY
+                        })
                 }
             })
         )
