@@ -114,8 +114,15 @@ const syncColumns = (api, apps, opts) => {
         .filter(tableName => !SYSTEM_TABLES.includes(tableName))
         .reduce((promise, tableName) => {
             const columnsMap = appTablesMap[tableName]
+            let columnNamesList = Object.keys(columnsMap)
 
-            Object.keys(columnsMap).forEach(columnName => {
+            if(tableName === 'Users') {
+                const identityColumn = columnNamesList.find(el => columnsMap[el][sourceApp.name].identity)
+
+                columnNamesList = [identityColumn, ...columnNamesList.filter(el => el !== identityColumn)]
+            }
+
+            columnNamesList.forEach(columnName => {
                 const sourceColumn = columnsMap[columnName][sourceApp.name]
 
                 targetApps.forEach(app => {
