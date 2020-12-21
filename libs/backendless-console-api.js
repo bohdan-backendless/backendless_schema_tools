@@ -74,7 +74,7 @@ class Backendless {
             return res
         })
 
-        const serverBaseURL = process.env.DEV ? 'http://localhost:9000' : `${beURL}/api`
+        const serverBaseURL = process.env.DEV ? 'http://localhost:9000' : beURL
 
         /* Assign input vars to object instance */
         _.assign(this, {
